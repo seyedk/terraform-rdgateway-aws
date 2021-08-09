@@ -62,7 +62,7 @@ variable "ami_id" {
 variable "rdgw_allowed_cidr" {
   description = "The allowed CIDR IP range for RDP access to the RD Gateway"
   type        = string
-  default     = null
+
 }
 
 variable "rdgw_name" {
@@ -90,19 +90,19 @@ variable "scripts" {
 variable "ad_directory_id" {
   description = "The ID of the AD domain (if null the RD Gateway will NOT be joined to domain)"
   type        = string
-  default     = null
+  
 }
 
 variable "ad_dns_ips" {
   description = "The IPs of the DNS servers for the AD domain"
   type        = list(string)
-  default     = null
+  
 }
 
 variable "ad_domain_fqdn" {
   description = "The  fully qualified domain name of the AD domain, i.e. example.com"
   type        = string
-  default     = null
+
 }
 
 variable "sns_arn" {
@@ -110,3 +110,4 @@ variable "sns_arn" {
   type        = string
   default     = null
 }
+

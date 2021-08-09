@@ -12,14 +12,14 @@ locals {
   any_port     = 0
   any_protocol = "-1"
   tcp_protocol = "tcp"
-  all_ips      = ["0.0.0.0/0"]
+  all_ips      = [local.rdgw_allowed_cidr]
 
   rdp_port = 3389
 
   host_name = "${var.rdgw_name}.${data.aws_route53_zone.selected[0].name}"
 
   ports_source_map = {
-    "443"  = "0.0.0.0/0"
+    "443"  = local.rdgw_allowed_cidr
     "3389" = local.rdgw_allowed_cidr
   }
 

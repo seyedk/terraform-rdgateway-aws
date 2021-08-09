@@ -23,3 +23,8 @@ output "tls_domains" {
   value       = local.domains
 }
 
+output "sqs_url" {
+  description = "The rul of the SQS queue for let's encrypt"
+  value = aws_sqs_queue.letsencrypt_tls.id
+}
+

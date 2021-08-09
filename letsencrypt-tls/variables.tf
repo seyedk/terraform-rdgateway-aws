@@ -10,7 +10,7 @@ variable "region" {
 variable "route53_public_zone" {
   description = "The name of the public Route 53 zone (aka domain name) that Letsencrypt certificates are issued for"
   type        = string
-  default     = null
+  default     = "slalom.lab"
 }
 
 variable "certbot_zip" {
@@ -43,7 +43,7 @@ variable "subdomain_name" {
 variable "email" {
   description = "The email address that Letsencrypt sends notifications to"
   type        = string
-  default     = null
+  default     = "seyedk@slalom.com"
 }
 
 variable "windows_target" {

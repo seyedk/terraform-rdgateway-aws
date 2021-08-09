@@ -213,6 +213,7 @@ resource "aws_sqs_queue" "letsencrypt_tls" {
   tags = local.common_tags
 }
 
+
 # SQS policy.
 resource "aws_sqs_queue_policy" "main" {
   queue_url = aws_sqs_queue.letsencrypt_tls.id
