@@ -16,6 +16,7 @@ variable "route53_public_zone" {
 variable "certbot_zip" {
   description = "The name of the certbot zip artifact to use i.e. certbot-0.27.1.zip"
   type        = string
+  default     = "certbot-0.27.1.zip"
 }
 
 #---------------------------------------------------------------

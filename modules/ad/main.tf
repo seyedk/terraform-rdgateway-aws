@@ -12,17 +12,17 @@ locals {
   dns_ip_addresses = var.ad_directory_type == "SimpleAD" ? aws_directory_service_directory.simple_ad[0].dns_ip_addresses : aws_directory_service_directory.microsoft_ad[0].dns_ip_addresses
 }
 
-data "terraform_remote_state" "vpc" {
+# data "terraform_remote_state" "vpc" {
 
-  backend = "s3"
+#   backend = "s3"
 
-  config = {
-    bucket         = "xceclerator-building-blocks-seyedk"
-    key            = "rdgw-vpc/terraform.tfstate"
-    region         = "us-east-1"
+#   config = {
+#     bucket         = "xceclerator-building-blocks-seyedk"
+#     key            = "rdgw-vpc/terraform.tfstate"
+#     region         = "us-east-1"
 
-  }
-}
+#   }
+# }
 
 # Create a MicrosoftAD directory if var.ad_directory_type == "MicrosoftAD"
 resource "aws_directory_service_directory" "microsoft_ad" {

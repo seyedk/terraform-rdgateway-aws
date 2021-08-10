@@ -16,7 +16,7 @@ locals {
 
   rdp_port = 3389
 
-  host_name = "${var.rdgw_name}.${data.aws_route53_zone.selected[0].name}"
+  host_name = "${var.rdgw_name}.${data.aws_route53_zone.selected.name}"
 
   ports_source_map = {
     "443"  = local.rdgw_allowed_cidr
@@ -160,7 +160,7 @@ resource "aws_instance" "rdgw" {
   vpc_security_group_ids = [aws_security_group.main.id]
 
   root_block_device {
-    volume_type = "gp3"
+    volume_type = "gp2"
     volume_size = "150"
     encrypted   = "true"
   }
@@ -178,7 +178,7 @@ resource "aws_instance" "rdgw" {
 
 # Create template file for the SSM document if var.ad_directory_id is not null.
 data "template_file" "ssm_document" {
-  count = var.ad_directory_id == null ? 0 : 1
+  # count = var.ad_directory_id == null ? 0 : 1
 
   template = file("${path.module}/ssm-document.json.tpl")
 
@@ -192,19 +192,19 @@ data "template_file" "ssm_document" {
 
 # Create the SSM document if var.ad_directory_id is not null.
 resource "aws_ssm_document" "main" {
-  count = var.ad_directory_id == null ? 0 : 1
+  # count = var.ad_directory_id == null ? 0 : 1
 
   name          = "${var.ad_domain_fqdn}-domain-join"
   document_type = "Command"
 
-  content = data.template_file.ssm_document[0].rendered
+  content = data.template_file.ssm_document.rendered
 }
 
 # Create the SSM association if var.ad_directory_id is not null.
 resource "aws_ssm_association" "main" {
-  count = var.ad_directory_id == null ? 0 : 1
+  # count = var.ad_directory_id == null ? 0 : 1
 
-  name = aws_ssm_document.main[0].name
+  name = aws_ssm_document.main.name
 
   targets {
     key    = "InstanceIds"
@@ -225,7 +225,7 @@ resource "aws_eip_association" "main" {
 
 # This data source allows to find a Hosted Zone ID given Hosted Zone name and certain search criteria.
 data "aws_route53_zone" "selected" {
-  count = var.route53_public_zone == null ? 0 : 1
+  # count = var.route53_public_zone == null ? 0 : 1
 
   name         = var.route53_public_zone
   private_zone = false
@@ -233,9 +233,9 @@ data "aws_route53_zone" "selected" {
 
 # Create A record in Route 53 zone.
 resource "aws_route53_record" "rdgw" {
-  count = var.route53_public_zone == null ? 0 : 1
+  # count = var.route53_public_zone == null ? 0 : 1
 
-  zone_id = data.aws_route53_zone.selected[0].zone_id
+  zone_id = data.aws_route53_zone.selected.zone_id
   name    = local.host_name
   type    = "A"
   ttl     = "60"
